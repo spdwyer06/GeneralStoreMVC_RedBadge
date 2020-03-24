@@ -101,5 +101,24 @@ namespace GeneralStoreMVC.Controllers
             }
             return View(product);
         }
+
+        // GET : Details
+        // Product/Details/{id}
+        public ActionResult Details(int? id)
+        {
+
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Product product = _dbContext.Products.Find(id);
+
+            if (product == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(product);
+        }
     }
 }
