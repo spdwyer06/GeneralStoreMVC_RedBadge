@@ -36,5 +36,37 @@ namespace GeneralStoreMVC.Controllers
             }
             return View(product);
         }
+
+        // GET : Delete
+        // Product/Delete/{id}
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
+            }
+
+            Product product = _dbContext.Products.Find(id);
+
+            if (product == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(product);
+        }
+
+        // POST : Delete
+        // Product/Delete/{id}
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult Delete(int id)
+        {
+            Product product = _dbContext.Products.Find(id);
+
+            _dbContext.Products.Remove(product);
+            _dbContext.SaveChanges();
+            return RedirectToAction("Index");
+        }
     }
 }
